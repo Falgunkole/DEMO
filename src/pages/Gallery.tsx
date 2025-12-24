@@ -37,7 +37,21 @@ const galleryItems = [
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-	@@ -56,7 +37,31 @@ const containerVariants = {
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
 };
 
 export default function Gallery() {
@@ -45,7 +59,13 @@ export default function Gallery() {
 
   return (
     <div className="pt-24 pb-20 bg-slate-950 relative overflow-hidden">
-	@@ -71,77 +76,90 @@ export default function Gallery() {
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500 rounded-full blur-3xl"></div>
+      </div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ScrollReveal>
+          <div className="text-center mb-16">
             <h1 className="text-5xl sm:text-6xl font-bold text-white mb-4">Our Work</h1>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto mb-4"></div>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto">
