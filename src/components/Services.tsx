@@ -3,6 +3,7 @@ import { Camera, Sun, Droplets, Home, Zap, Fingerprint, Battery } from 'lucide-r
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+// Service IDs must match the paths in App.tsx
 export const servicesData = [
   {
     id: 'cctv-installation',
@@ -17,13 +18,6 @@ export const servicesData = [
     title: 'Smart Solar Energy Systems',
     description: 'Rooftop solar setup with monitoring and maintenance for a greener future.',
     gradient: 'from-orange-500 to-yellow-500'
-  },
-  {
-    id: 'solar-cctv',
-    icon: Battery,
-    title: 'Smart Solar CCTV',
-    description: 'Solar-powered surveillance systems for remote areas without grid dependency.',
-    gradient: 'from-green-500 to-emerald-500'
   },
   {
     id: 'home-automation',
@@ -59,15 +53,16 @@ export default function Services() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service) => (
+            /* WRAPPING THE ENTIRE CARD IN A LINK COMPONENT */
             <Link 
               key={service.id} 
               to={`/services/${service.id}`}
               className="block group"
             >
               <motion.div
-                whileHover={{ y: -8 }}
+                whileHover={{ y: -5 }}
                 whileTap={{ scale: 0.98 }}
-                className="glass-card rounded-3xl p-8 h-full border border-white/10 hover:border-blue-500/50 transition-colors"
+                className="glass-card rounded-3xl p-8 h-full border border-white/10 hover:border-blue-500/50 transition-all duration-300"
               >
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                   <service.icon className="text-white" size={28} />
@@ -75,7 +70,7 @@ export default function Services() {
                 <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
                 <p className="text-slate-400 leading-relaxed mb-6">{service.description}</p>
                 <div className="text-blue-400 font-semibold group-hover:translate-x-2 transition-transform inline-flex items-center">
-                  View Service Details <span className="ml-2">→</span>
+                  View Details <span className="ml-2">→</span>
                 </div>
               </motion.div>
             </Link>
