@@ -1,19 +1,27 @@
 /* src/pages/ServiceDetail.tsx */
 import { useParams, useNavigate } from 'react-router-dom';
 import { servicesData } from '../components/Services';
-import { ArrowLeft, ShieldCheck } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export default function ServiceDetail() {
-  const { serviceId } = useParams(); // URL ID detection
+  const { serviceId } = useParams();
   const navigate = useNavigate();
   const service = servicesData.find(s => s.id === serviceId);
 
-  if (!service) return <div className="pt-40 text-center text-white">Service Not Found</div>;
+  // Safety check: Prevents white screen if service is not found
+  if (!service) {
+    return (
+      <div className="pt-40 text-center text-white min-h-screen bg-slate-950">
+        <h2 className="text-2xl mb-4">Service Not Found</h2>
+        <button onClick={() => navigate('/')} className="text-blue-400 underline">Return Home</button>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-32 pb-20 bg-slate-950 min-h-screen">
       <div className="max-w-4xl mx-auto px-4">
-        <button onClick={() => navigate(-1)} className="flex items-center text-slate-400 hover:text-white mb-8">
+        <button onClick={() => navigate(-1)} className="flex items-center text-slate-400 hover:text-white mb-8 transition-colors">
           <ArrowLeft size={20} className="mr-2" /> Back
         </button>
 
@@ -27,11 +35,10 @@ export default function ServiceDetail() {
           </p>
 
           <button
-            /* THIS LINE PASSES THE SERVICE NAME TO THE BOOKING FORM */
             onClick={() => navigate('/book', { state: { selectedService: service.title } })}
             className="w-full md:w-auto px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl transition-all shadow-2xl shadow-blue-900/40"
           >
-            Book This Service
+            Book {service.title} Now
           </button>
         </div>
       </div>

@@ -1,19 +1,76 @@
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  
-  try {
-   // Inside handleSubmit in BookService.tsx
-const response = await fetch('http://localhost:5001/api/bookings', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData),
-});
+/* src/pages/BookService.tsx */
+import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Send } from 'lucide-react';
 
-    if (response.ok) {
-      alert("Booking Successful!");
-    }
-  } catch (error) {
-    console.error("Connection failed:", error);
-    alert("Could not connect to the backend server.");
-  }
-};
+// Use 'export default' so App.tsx can find it
+export default function BookService() {
+  const location = useLocation();
+  
+  // Define formData state properly to fix the "Cannot find name" error
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    address: '',
+    service: location.state?.selectedService || 'Consultation Request'
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Use the lowercase 'formData' variable defined in state above
+    alert(`Request received for ${formData.service}! We'll contact ${formData.name} soon.`);
+  };
+
+  return (
+    <div className="pt-32 pb-20 bg-slate-950 min-h-screen">
+      <div className="max-w-xl mx-auto px-4">
+        <div className="glass-card p-8 rounded-3xl border border-white/10">
+          <h2 className="text-3xl font-bold text-white mb-6">Service Request</h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-slate-400 text-sm mb-2">Service Selected</label>
+              <input 
+                readOnly 
+                value={formData.service} 
+                className="w-full bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-slate-300" 
+              />
+            </div>
+            <div>
+              <label className="block text-slate-400 text-sm mb-2">Your Name</label>
+              <input 
+                required 
+                type="text" 
+                value={formData.name}
+                className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500" 
+                onChange={e => setFormData({...formData, name: e.target.value})} 
+              />
+            </div>
+            <div>
+              <label className="block text-slate-400 text-sm mb-2">Phone Number</label>
+              <input 
+                required 
+                type="tel" 
+                value={formData.phone}
+                className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500" 
+                onChange={e => setFormData({...formData, phone: e.target.value})} 
+              />
+            </div>
+            <div>
+              <label className="block text-slate-400 text-sm mb-2">Installation Address</label>
+              <textarea 
+                required 
+                rows={3} 
+                value={formData.address}
+                className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-500 resize-none" 
+                onChange={e => setFormData({...formData, address: e.target.value})} 
+              />
+            </div>
+            <button type="submit" className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-blue-500 transition-colors">
+              Submit Request <Send size={18} />
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
