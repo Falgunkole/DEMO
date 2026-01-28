@@ -4,9 +4,9 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
-import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail'; // New Page
-import BookService from './pages/BookService';     // New Page
+import ServicesPage from './pages/Services'; // Renamed to avoid confusion with component
+import ServiceDetail from './pages/ServiceDetail';
+import BookService from './pages/BookService';
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 
@@ -19,8 +19,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            {/* Dynamic route for individual services */}
+            <Route path="/services" element={<ServicesPage />} />
+            {/* Dynamic route to catch service IDs */}
             <Route path="/services/:serviceId" element={<ServiceDetail />} />
             <Route path="/book" element={<BookService />} />
             <Route path="/gallery" element={<Gallery />} />
