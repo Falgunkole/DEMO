@@ -1,18 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+
 const app = express();
+const PORT = 5001; // Using 5001 to avoid common conflicts
 
 app.use(cors());
 app.use(express.json());
 
-// This endpoint receives the form data
 app.post('/api/bookings', (req, res) => {
-  const { name, phone, address, service } = req.body;
-  
-  // LOGIC: Save to Database (like MongoDB) or Send Email
-  console.log(`New Booking: ${name} wants ${service} at ${address}`);
-
-  res.status(200).json({ success: true, message: "Booking received successfully!" });
+  console.log('Data received:', req.body);
+  res.status(200).json({ success: true, message: 'Booking received!' });
 });
 
-app.listen(5000, () => console.log('Server running on port 5000'));
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
