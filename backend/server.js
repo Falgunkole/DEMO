@@ -5,17 +5,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// API Endpoint to handle bookings
-app.post('/api/book', (req, res) => {
-  const { name, address, service, phone } = req.body;
+// This endpoint receives the form data
+app.post('/api/bookings', (req, res) => {
+  const { name, phone, address, service } = req.body;
   
-  console.log("New Booking Received:", { name, address, service, phone });
+  // LOGIC: Save to Database (like MongoDB) or Send Email
+  console.log(`New Booking: ${name} wants ${service} at ${address}`);
 
-  // Here you would typically save to a database or send an email
-  res.status(200).json({ 
-    message: `Thank you, ${name}! Your booking for ${service} has been received.` 
-  });
+  res.status(200).json({ success: true, message: "Booking received successfully!" });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
+app.listen(5000, () => console.log('Server running on port 5000'));
