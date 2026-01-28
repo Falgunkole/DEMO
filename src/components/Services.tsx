@@ -1,8 +1,8 @@
 /* src/components/Services.tsx */
 import { Camera, Sun, Droplets, Home, Zap, Fingerprint, Battery } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-// Data exported so it can be used by the Detail page
+// Data to be shared with the Detail page
 export const servicesData = [
   {
     id: 'cctv-camera',
@@ -49,8 +49,6 @@ export const servicesData = [
 ];
 
 export default function Services() {
-  const navigate = useNavigate();
-
   return (
     <section className="py-20 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,20 +59,23 @@ export default function Services() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service) => (
-            <div
-              key={service.id}
-              onClick={() => navigate(`/services/${service.id}`)}
-              className="glass-card rounded-2xl p-8 cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:border-blue-500/50 group"
+            /* We wrap the entire card in a Link tag to make it 100% clickable */
+            <Link 
+              key={service.id} 
+              to={`/services/${service.id}`}
+              className="block no-underline"
             >
-              <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                <service.icon className="text-white" size={28} />
+              <div className="glass-card rounded-2xl p-8 transform transition-all duration-300 hover:-translate-y-2 hover:border-blue-500/50 group h-full">
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <service.icon className="text-white" size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
+                <p className="text-slate-400 leading-relaxed">{service.description}</p>
+                <div className="mt-6 text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                  View Service Details →
+                </div>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
-              <p className="text-slate-400 leading-relaxed">{service.description}</p>
-              <div className="mt-6 text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                View Details →
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
