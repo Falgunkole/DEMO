@@ -59,18 +59,18 @@ export default function Services() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group"
-            >
-              <div className={`bg-gradient-to-r ${service.gradient} p-6`}>
-                <service.icon className="text-white" size={48} />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{service.description}</p>
-              </div>
-            </div>
+           /* src/components/Services.tsx (Partial) */
+// Inside your map function:
+<div
+  key={index}
+  className="glass-card group p-8 rounded-3xl hover:border-blue-500/50 transition-all duration-500 cursor-default"
+>
+  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+    <service.icon className="text-white" size={28} />
+  </div>
+  <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
+  <p className="text-slate-400 leading-relaxed text-sm md:text-base">{service.description}</p>
+</div>
           ))}
         </div>
       </div>
