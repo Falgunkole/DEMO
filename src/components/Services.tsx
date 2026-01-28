@@ -1,59 +1,80 @@
 /* src/components/Services.tsx */
 import { Camera, Sun, Droplets, Home, Zap, Fingerprint, Battery } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import ScrollReveal from './ScrollReveal';
 
+// Data exported so it can be used by the Detail page
 export const servicesData = [
   {
-    id: 'cctv-installation',
+    id: 'cctv-camera',
     icon: Camera,
     title: 'CCTV Camera Installation',
-    description: 'High-quality Hikvision & CP Plus systems, wired & wireless surveillance solutions with remote monitoring capabilities.',
-    fullDetails: 'Our CCTV solutions provide 24/7 surveillance with high-definition clarity. We specialize in both IP and Analog systems, offering remote mobile viewing, motion detection alerts, and secure cloud storage options.',
+    description: 'High-quality Hikvision & CP Plus systems, wired & wireless surveillance solutions.',
     gradient: 'from-blue-500 to-cyan-500'
   },
   {
     id: 'solar-energy',
     icon: Sun,
     title: 'Smart Solar Energy Systems',
-    description: 'Rooftop solar setup with monitoring and maintenance. Reduce your electricity bills.',
-    fullDetails: 'Switch to renewable energy with our premium solar panels. We handle everything from site assessment and installation to government subsidy processing and long-term maintenance.',
+    description: 'Rooftop solar setup with monitoring and maintenance for a greener future.',
     gradient: 'from-orange-500 to-yellow-500'
   },
-  // ... Add unique 'id' and 'fullDetails' to other existing services from your original file
+  {
+    id: 'solar-cctv',
+    icon: Battery,
+    title: 'Smart Solar CCTV',
+    description: 'Solar-powered surveillance systems for remote areas without grid dependency.',
+    gradient: 'from-green-500 to-emerald-500'
+  },
+  {
+    id: 'automation',
+    icon: Home,
+    title: 'Smart Home Automation',
+    description: 'Control your lights, fans, and devices with one touch from anywhere.',
+    gradient: 'from-blue-500 to-slate-600'
+  },
+  {
+    id: 'drainage',
+    icon: Droplets,
+    title: 'Smart Drainage System',
+    description: 'IoT-based drainage monitoring to prevent overflow and ensure water management.',
+    gradient: 'from-cyan-500 to-blue-600'
+  },
+  {
+    id: 'biometric',
+    icon: Fingerprint,
+    title: 'Biometric Access Control',
+    description: 'Advanced attendance & door access systems for enhanced security.',
+    gradient: 'from-slate-600 to-gray-700'
+  }
 ];
 
 export default function Services() {
   const navigate = useNavigate();
 
   return (
-    <section id="services" className="py-24 bg-slate-950">
+    <section className="py-20 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Our Services</h2>
-            <div className="w-24 h-1 bg-blue-600 mx-auto mb-6"></div>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Click on any service to view full details and book a consultation.
-            </p>
-          </div>
-        </ScrollReveal>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-white mb-4">Our Services</h2>
+          <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {servicesData.map((service, index) => (
-            <ScrollReveal key={index}>
-              <div
-                onClick={() => navigate(`/services/${service.id}`)}
-                className="glass-card group p-8 rounded-3xl hover:border-blue-500/50 transition-all duration-500 cursor-pointer h-full"
-              >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <service.icon className="text-white" size={28} />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">{service.title}</h3>
-                <p className="text-slate-400 leading-relaxed mb-6">{service.description}</p>
-                <span className="text-blue-400 font-semibold group-hover:underline">View Details →</span>
+          {servicesData.map((service) => (
+            <div
+              key={service.id}
+              onClick={() => navigate(`/services/${service.id}`)}
+              className="glass-card rounded-2xl p-8 cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:border-blue-500/50 group"
+            >
+              <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                <service.icon className="text-white" size={28} />
               </div>
-            </ScrollReveal>
+              <h3 className="text-2xl font-bold text-white mb-3">{service.title}</h3>
+              <p className="text-slate-400 leading-relaxed">{service.description}</p>
+              <div className="mt-6 text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+                View Details →
+              </div>
+            </div>
           ))}
         </div>
       </div>
