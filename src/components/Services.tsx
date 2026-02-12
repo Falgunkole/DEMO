@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Camera, Sun, Home, Battery, Droplets, Fingerprint } from 'lucide-react';
+import { Camera, Sun, Home } from 'lucide-react';
 
 // Ensure these IDs are simple strings used in the URL
-export const servicesData = [
+const servicesData = [
   { id: 'cctv', icon: Camera, title: 'CCTV Installation', description: 'Surveillance solutions.', gradient: 'from-blue-500 to-cyan-500' },
   { id: 'solar', icon: Sun, title: 'Solar Energy', description: 'Renewable power.', gradient: 'from-orange-500 to-yellow-500' },
   { id: 'automation', icon: Home, title: 'Home Automation', description: 'Smart living.', gradient: 'from-purple-500 to-pink-500' },
