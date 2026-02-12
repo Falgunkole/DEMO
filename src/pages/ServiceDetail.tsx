@@ -1,45 +1,61 @@
-/* src/pages/ServiceDetail.tsx */
-import { useParams, useNavigate } from 'react-router-dom';
-import { servicesData } from '../components/Services';
-import { ArrowLeft } from 'lucide-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Check } from 'lucide-react';
+import { servicesData } from '../data/services';
 
 export default function ServiceDetail() {
   const { serviceId } = useParams();
   const navigate = useNavigate();
-  const service = servicesData.find(s => s.id === serviceId);
+  const service = servicesData.find((item) => item.id === serviceId);
 
-  // Safety check: Prevents white screen if service is not found
   if (!service) {
     return (
       <div className="pt-40 text-center text-white min-h-screen bg-slate-950">
         <h2 className="text-2xl mb-4">Service Not Found</h2>
-        <button onClick={() => navigate('/')} className="text-blue-400 underline">Return Home</button>
+        <button onClick={() => navigate('/services')} className="text-blue-400 underline">Return to Services</button>
       </div>
     );
   }
 
   return (
-    <div className="pt-32 pb-20 bg-slate-950 min-h-screen">
+    <div className="pt-28 pb-16 bg-slate-950 min-h-screen">
       <div className="max-w-4xl mx-auto px-4">
-        <button onClick={() => navigate(-1)} className="flex items-center text-slate-400 hover:text-white mb-8 transition-colors">
+        <button onClick={() => navigate(-1)} className="flex items-center text-slate-400 hover:text-white mb-6 transition-colors">
           <ArrowLeft size={20} className="mr-2" /> Back
         </button>
 
-        <div className="glass-card p-8 md:p-12 rounded-3xl border border-white/10">
-          <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-8`}>
-            <service.icon className="text-white" size={40} />
+        <div className="glass-card rounded-3xl border border-white/10 overflow-hidden">
+          <div className="h-52 sm:h-72 overflow-hidden">
+            <img src={service.image} alt={service.title} className="h-full w-full object-cover" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">{service.title}</h1>
-          <p className="text-xl text-slate-300 leading-relaxed mb-10">
-            {service.description} Our professional team in Pune ensures a seamless setup and provides 24/7 technical support.
-          </p>
 
-          <button
-            onClick={() => navigate('/book', { state: { selectedService: service.title } })}
-            className="w-full md:w-auto px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl transition-all shadow-2xl shadow-blue-900/40"
-          >
-            Book {service.title} Now
-          </button>
+          <div className="p-6 sm:p-10">
+            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-6`}>
+              <service.icon className="text-white" size={32} />
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-bold text-white mb-5">{service.title}</h1>
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed mb-8">{service.description}</p>
+
+            <div className="mb-10 rounded-xl border border-slate-700 bg-slate-900/60 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-white mb-4">What is included</h2>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {service.includes.map((feature) => (
+                  <div key={feature} className="flex items-start gap-2 text-slate-200 text-sm sm:text-base">
+                    <Check size={16} className="mt-1 text-cyan-400" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 sm:gap-4">
+              <Link to="/book" state={{ selectedService: service.title }} className="px-6 sm:px-8 py-3.5 sm:py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all">
+                Book this service
+              </Link>
+              <Link to="/contact" className="px-6 sm:px-8 py-3.5 sm:py-4 border border-white/20 text-white hover:bg-white/10 rounded-xl font-semibold transition-all">
+                Talk to an expert
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

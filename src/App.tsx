@@ -9,6 +9,7 @@ import ServiceDetail from './pages/ServiceDetail';
 import BookService from './pages/BookService'; // This works now
 import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
+import OwnerDashboard from './pages/OwnerDashboard';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/book" element={<BookService />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/owner" element={<OwnerDashboard />} />
           </Routes>
         </main>
         <Footer />

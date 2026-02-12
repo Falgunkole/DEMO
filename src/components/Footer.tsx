@@ -24,10 +24,10 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
             <ul className="space-y-3">
-              {['Home', 'About', 'Services', 'Contact'].map((item) => (
+              {['Home', 'About', 'Services', 'Contact', 'Owner'].map((item) => (
                 <motion.li key={item} whileHover="hover">
                   <Link
-                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                    to={item === 'Home' ? '/' : item === 'Owner' ? '/owner' : `/${item.toLowerCase()}`}
                     className="text-slate-400 hover:text-cyan-400 transition inline-flex items-center"
                   >
                     <motion.span variants={linkVariants}>
