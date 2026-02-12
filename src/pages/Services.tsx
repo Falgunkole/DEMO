@@ -1,51 +1,8 @@
-import { Camera, Sun, Droplets, Home, Zap, Fingerprint, Battery } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowRight, BadgeCheck } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
-
-const services = [
-  {
-    icon: Camera,
-    title: 'CCTV Camera Installation',
-    description: 'High-quality Hikvision & CP Plus systems, wired & wireless surveillance solutions with remote monitoring capabilities. Our expert technicians ensure optimal placement and setup for maximum coverage.',
-    color: 'from-blue-500 to-cyan-500'
-  },
-  {
-    icon: Sun,
-    title: 'Smart Solar Energy Systems',
-    description: 'Rooftop solar setup with monitoring and maintenance. Reduce your electricity bills while contributing to a greener future. We provide end-to-end solar solutions with performance tracking.',
-    color: 'from-orange-500 to-yellow-500'
-  },
-  {
-    icon: Battery,
-    title: 'Smart Solar CCTV',
-    description: 'Solar-powered surveillance systems for remote areas. Reliable security without grid dependency. Perfect for farms, warehouses, and off-grid locations.',
-    color: 'from-green-500 to-emerald-500'
-  },
-  {
-    icon: Home,
-    title: 'Smart Home Automation',
-    description: 'Control your lights, fans, and devices with one touch. Experience modern living with intelligent automation. Voice-controlled and app-based management included.',
-    color: 'from-blue-500 to-cyan-500'
-  },
-  {
-    icon: Droplets,
-    title: 'Smart Drainage System',
-    description: 'IoT-based drainage monitoring to prevent overflow and ensure efficient water management. Real-time alerts and analytics for proactive maintenance.',
-    color: 'from-cyan-500 to-blue-600'
-  },
-  {
-    icon: Fingerprint,
-    title: 'Biometric Access Control',
-    description: 'Advanced attendance & door access systems for enhanced security and streamlined workforce management. Reliable, fast, and secure biometric recognition.',
-    color: 'from-slate-600 to-slate-700'
-  },
-  {
-    icon: Zap,
-    title: 'EV Charging Solutions',
-    description: 'Compact and efficient charging setups for electric vehicles. Future-ready infrastructure for sustainable transportation. Easy installation and management.',
-    color: 'from-green-500 to-teal-600'
-  }
-];
+import { servicesData } from '../data/services';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -78,10 +35,10 @@ export default function Services() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h1 className="text-5xl sm:text-6xl font-bold text-white mb-4">Our Services</h1>
+            <h1 className="text-5xl sm:text-6xl font-bold text-white mb-4">Business Services</h1>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto mb-4"></div>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
-              Comprehensive technology solutions for modern homes and businesses
+            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+              Security, automation, and energy solutions designed for modern businesses and homes with reliable implementation and support.
             </p>
           </div>
         </ScrollReveal>
@@ -93,8 +50,8 @@ export default function Services() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {services.map((service, index) => (
-            <motion.div key={index} variants={itemVariants}>
+          {servicesData.map((service) => (
+            <motion.div key={service.id} variants={itemVariants}>
               <motion.div
                 className="group relative overflow-hidden rounded-xl border border-slate-700/50 bg-gradient-to-br from-slate-800 to-slate-900 backdrop-blur-sm hover:border-cyan-500/50 h-full"
                 whileHover={{ y: -8 }}
@@ -102,13 +59,36 @@ export default function Services() {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-cyan-500/0 group-hover:from-blue-500/10 group-hover:to-cyan-500/10 transition-all duration-300"></div>
 
-                <div className={`bg-gradient-to-r ${service.color} p-8 text-white relative z-10`}>
-                  <service.icon size={48} />
+                <div className={`bg-gradient-to-r ${service.gradient} p-8 text-white relative z-10 flex items-center justify-between`}>
+                  <service.icon size={42} />
+                  {service.popular && <BadgeCheck size={24} className="text-white/90" />}
                 </div>
 
                 <div className="p-8 relative z-10">
                   <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
-                  <p className="text-slate-300 leading-relaxed">{service.description}</p>
+                  <p className="text-slate-300 leading-relaxed mb-5">{service.description}</p>
+
+                  <div className="space-y-2 mb-6">
+                    {service.includes.slice(0, 2).map((item) => (
+                      <p key={item} className="text-sm text-slate-300">• {item}</p>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <Link
+                      to={`/services/${service.id}`}
+                      className="inline-flex items-center gap-2 text-cyan-300 hover:text-cyan-200 font-semibold"
+                    >
+                      View details <ArrowRight size={16} />
+                    </Link>
+                    <Link
+                      to="/book"
+                      state={{ selectedService: service.title }}
+                      className="inline-flex items-center rounded-lg bg-cyan-500/20 px-3 py-1.5 text-sm font-medium text-cyan-200 hover:bg-cyan-500/30"
+                    >
+                      Book now
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

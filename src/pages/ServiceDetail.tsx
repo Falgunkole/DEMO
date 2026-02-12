@@ -1,19 +1,17 @@
-/* src/pages/ServiceDetail.tsx */
-import { useParams, useNavigate } from 'react-router-dom';
-import { servicesData } from '../components/Services';
-import { ArrowLeft } from 'lucide-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Check } from 'lucide-react';
+import { servicesData } from '../data/services';
 
 export default function ServiceDetail() {
   const { serviceId } = useParams();
   const navigate = useNavigate();
-  const service = servicesData.find(s => s.id === serviceId);
+  const service = servicesData.find((item) => item.id === serviceId);
 
-  // Safety check: Prevents white screen if service is not found
   if (!service) {
     return (
       <div className="pt-40 text-center text-white min-h-screen bg-slate-950">
         <h2 className="text-2xl mb-4">Service Not Found</h2>
-        <button onClick={() => navigate('/')} className="text-blue-400 underline">Return Home</button>
+        <button onClick={() => navigate('/services')} className="text-blue-400 underline">Return to Services</button>
       </div>
     );
   }
@@ -30,16 +28,35 @@ export default function ServiceDetail() {
             <service.icon className="text-white" size={40} />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">{service.title}</h1>
-          <p className="text-xl text-slate-300 leading-relaxed mb-10">
-            {service.description} Our professional team in Pune ensures a seamless setup and provides 24/7 technical support.
-          </p>
+          <p className="text-xl text-slate-300 leading-relaxed mb-8">{service.description}</p>
 
-          <button
-            onClick={() => navigate('/book', { state: { selectedService: service.title } })}
-            className="w-full md:w-auto px-10 py-5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl transition-all shadow-2xl shadow-blue-900/40"
-          >
-            Book {service.title} Now
-          </button>
+          <div className="mb-10 rounded-xl border border-slate-700 bg-slate-900/60 p-6">
+            <h2 className="text-lg font-semibold text-white mb-4">What is included</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {service.includes.map((feature) => (
+                <div key={feature} className="flex items-start gap-2 text-slate-200">
+                  <Check size={16} className="mt-1 text-cyan-400" />
+                  <span>{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-4">
+            <Link
+              to="/book"
+              state={{ selectedService: service.title }}
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all"
+            >
+              Book this service
+            </Link>
+            <Link
+              to="/contact"
+              className="px-8 py-4 border border-white/20 text-white hover:bg-white/10 rounded-xl font-semibold transition-all"
+            >
+              Talk to an expert
+            </Link>
+          </div>
         </div>
       </div>
     </div>
