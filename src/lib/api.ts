@@ -22,6 +22,15 @@ async function apiRequest<T>(path: string, options: RequestOptions = {}): Promis
   return response.json() as Promise<T>;
 }
 
+export type AdminSummary = {
+  success: boolean;
+  bookingsCount: number;
+  contactsCount: number;
+  recentBookings: Array<{ bookingId: string; name: string; service: string; createdAt: string }>;
+  recentContacts: Array<{ contactId: string; name: string; createdAt: string }>;
+  popularServices: Array<{ service: string; count: number }>;
+};
+
 export const api = {
   submitBooking: (payload: { name: string; phone: string; address: string; service: string; preferredDate?: string; notes?: string }) =>
     apiRequest<{ success: boolean; message: string; bookingId: string }>('/api/bookings', {
@@ -33,6 +42,7 @@ export const api = {
       method: 'POST',
       body: payload
     }),
-  getServices: () => apiRequest<{ success: boolean; services: Array<{ id: string; title: string }> }>('/api/services'),
+  getServices: () => apiRequest<{ success: boolean; services: Array<{ id: string; title: string; category: string; startingPrice: string }> }>('/api/services'),
+  getAdminSummary: () => apiRequest<AdminSummary>('/api/admin/summary'),
   healthCheck: () => apiRequest<{ success: boolean; status: string }>('/api/health')
 };
